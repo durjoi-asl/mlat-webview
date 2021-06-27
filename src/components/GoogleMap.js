@@ -1,6 +1,7 @@
 import GoogleMapReact from 'google-map-react';
 import { React, Component } from 'react'
 import Sidebar from './Sidebar'
+import Logo from './../logo.png'
 
 
 const SensorMarker = () => <div style={{cursor: 'pointer'}}>
@@ -32,10 +33,8 @@ class GoogleMap extends Component {
     state = {
         aircrafts: {
             data: []
-        }, 
-        aircraft: {
-            data:[]
         },
+        icao: '',
         display: "none"
     }
     constructor(props) {
@@ -44,32 +43,46 @@ class GoogleMap extends Component {
 
         this.handleMarkerClick = this.handleMarkerClick.bind(this);
         this.showAircrafts = this.showAircrafts.bind(this);
+        this.closeSidebar = this.closeSidebar.bind(this);
     }
 
     handleMarkerClick = (index) => {
         const set = this;
         return function() {
-            var css = (set.state.display === "none") ? "block" : "none";
-            var data = set.state.aircrafts.data[index];
+            var css = "block";
+            var data = set.state.aircrafts.data[index].icao;
+            // console.log(data);
 
             set.setState({
-                aircraft: {data},
+                icao: data,
                 display: css,
             });
-            console.log(set.state.aircraft);
+            // console.log(set.state.aircraft);
             // console.log(set.state.aircrafts.data[index]);
         }
       }
 
-    componentDidMount() {
+      closeSidebar = () => {
+        const set = this;
+        return function() {
+            set.setState({
+                display: "none",
+                icao: ''
+            })
+        }
+      }
+
+    componentWillMount() {
         const apiUrl = 'http://103.95.99.98:8001';
 
         this.interval = setInterval(() => fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
+                var len = data.length;
                 // console.log(data);
                 this.setState({
                     aircrafts: {data},
+                    totalAircrafts: len - 1,
                 });
             }), 1000)
     }
@@ -97,6 +110,14 @@ class GoogleMap extends Component {
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '100vh', width: '100%' }}>
+                <nav style={{ height: '70px', width: '100%', background: '#fff', borderBottom: '1px solid #000' }}>
+                    <div style={{ paddingLeft: '20px', width: '20%', float: 'left' }}>
+                        <img src={ Logo } style={{ height: "50px", display: 'inline-block', marginTop: '5px' }} />
+                    </div>
+                    <div style={{ paddingRight: '20px', lineHeight: '70px', fontSize: '24px', fontWeight: '700', float: 'right', width: '60%', textAlign: 'right' }}>
+                        Total Aircraft: {this.state.totalAircrafts}</div>
+                </nav>
+                <div style={{ height: 'calc(100% - 70px)' }}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyAhhveERkRFz2TIjA8akOSGIAC3bpsm5U8' }}
                     defaultCenter={{lat: 23.728783, lng: 90.393791}}
@@ -111,7 +132,9 @@ class GoogleMap extends Component {
                     {this.showAircrafts()}
                 </GoogleMapReact>
 
-                {/* <Sidebar display={this.state.display} aircraft={this.state.aircraft.data}/> */}
+                <Sidebar display={this.state.display} icao={this.state.icao} handler= {this.closeSidebar()}/>
+                </div>
+                
             </div>
         )
     }
