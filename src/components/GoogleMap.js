@@ -50,7 +50,7 @@ class GoogleMap extends Component {
         const set = this;
         return function() {
             var css = "block";
-            var data = set.state.aircrafts.data[index].icao;
+            var data = set.state.aircrafts.data[index]._id;
             // console.log(data);
 
             set.setState({
@@ -82,7 +82,7 @@ class GoogleMap extends Component {
                 // console.log(data);
                 this.setState({
                     aircrafts: {data},
-                    totalAircrafts: len - 1,
+                    totalAircrafts: len,
                 });
             }), 1000)
     }
@@ -97,10 +97,10 @@ class GoogleMap extends Component {
             return <AircraftsMarker
               key={idx}
               id={idx}
-              lat={aircraft.flightInfo.lat}
-              lng={aircraft.flightInfo.long}
-              text={aircraft.icao}
-              rotate={aircraft.flightInfo.angle - 90}
+              lat={aircraft.lat}
+              lng={aircraft.lon}
+              text={aircraft._id}
+              rotate={aircraft.angle - 90}
               onMarkerClick={this.handleMarkerClick(idx)}
             />
         })
@@ -110,14 +110,14 @@ class GoogleMap extends Component {
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '100vh', width: '100%' }}>
-                <nav style={{ height: '70px', width: '100%', background: '#fff', borderBottom: '1px solid #000' }}>
+                <header style={{ height: '60px', width: '100%', color: '#fff', background: 'rgb(97 97 97)', borderBottom: '1px solid #000', }}>
                     <div style={{ paddingLeft: '20px', width: '20%', float: 'left' }}>
-                        <img src={ Logo } style={{ height: "50px", display: 'inline-block', marginTop: '5px' }} />
+                        <img src={ Logo } style={{ height: "40px", display: 'inline-block', marginTop: '5px' }} />
                     </div>
-                    <div style={{ paddingRight: '20px', lineHeight: '70px', fontSize: '24px', fontWeight: '700', float: 'right', width: '60%', textAlign: 'right' }}>
+                    <div style={{ paddingRight: '20px', lineHeight: '70px', fontSize: '18px', fontWeight: '700', float: 'right', width: '60%', textAlign: 'right' }}>
                         Total Aircraft: {this.state.totalAircrafts}</div>
-                </nav>
-                <div style={{ height: 'calc(100% - 70px)' }}>
+                </header>
+                <div style={{ height: 'calc(100% - 60px)' }}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyAhhveERkRFz2TIjA8akOSGIAC3bpsm5U8' }}
                     defaultCenter={{lat: 23.728783, lng: 90.393791}}
@@ -134,6 +134,10 @@ class GoogleMap extends Component {
 
                 <Sidebar display={this.state.display} icao={this.state.icao} handler= {this.closeSidebar()}/>
                 </div>
+
+                <footer style={{ position: 'absolute', bottom: '0px', left: '0px', height: '30px', lineHeight: '30px', fontSize: '14px', textAlign: 'center', width: '100%', color: '#fff', background: 'rgba(0, 0, 0, 34%)' }}>
+                    Copywright @ ASL Systems Ltd.
+                </footer>
                 
             </div>
         )

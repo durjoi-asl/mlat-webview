@@ -28,7 +28,7 @@ class Sidebar extends Component {
         });
 
         if(this.props.icao !== '') {
-            const apiUrl = 'http://192.168.50.12:8001?icao=' + this.state.icao;
+            const apiUrl = 'http://103.95.99.98:8001?icao=' + this.state.icao;
         
 
         // this.interval = setInterval(() => fetch(apiUrl)
@@ -86,24 +86,84 @@ class Sidebar extends Component {
             position: "fixed", 
             top: "90px", 
             left: "20px", 
-            background: "#fff", 
-            border: '2px solid #000',
+            background: "rgb(97 97 97)", 
+            color: "#fff",
             borderRadius: '5px',
             padding: '20px',
             display: this.state.display };
         return (
             <aside className="aside show" style={sidebarStyle}>
-                <button id="close" onClick={this.props.handler}
-                    style={{ 
-                        float: 'right',
-                     }}
-                >Close</button>
+                <div style={{
+                    marginBottom: '20px'
+                }}>
+                    <h2 style={{
+                        display: 'inline-block',
+                        margin: '0px',
+                        color: '#fbad18'
+                    }}>
+                    { this.state.aircraft ? this.state.aircraft.clSgn : ""  }
+                    </h2>
+                    <button id="close" onClick={this.props.handler}
+                        style={{ 
+                            float: 'right',
+                            display: 'block'
+                        }}
+                    >Close</button>
+                </div>
                 
-                <div>ICAO: { this.state.aircraft ? this.state.aircraft._id : ""  }</div>
-                <div>Calsign: { this.state.aircraft ? this.state.aircraft.clSgn : ""  }</div>
-                <div>Lat: { this.state.aircraft ? this.state.aircraft.lat : ""  }</div>
-                <div>Lat: { this.state.aircraft ? this.state.aircraft.lon : ""  }</div>
-                {/* {this.props.aircraft.flightInfo.lat} */}
+                <h4 style={{ marginBottom: "20px" }}>Aircraft Information</h4>
+
+                <div>
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>ICAO</strong>
+                        <p style={{ margin: "0px"}}>{ this.state.aircraft ? this.state.aircraft._id : ""  }</p>
+                    </div>
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>CALSIGN</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.clSgn : ""  }</p>
+                    </div>
+                </div>
+                
+                <h4 style={{ marginBottom: "20px", marginTop: "70px" }}>Positional Information</h4>
+
+                <div>
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ marginBottom: "5px" , fontSize: "13px" }}>LATITUDE</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.lat : ""  }</p>
+                    </div>
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>LONGITUDE</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.lon : ""  }</p>
+                    </div>
+                    
+
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>ALTITUDE</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.alt : ""  }</p>
+                    </div>
+
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px", fontSize: "13px" }}>SPEED</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.speed : ""  }</p>
+                    </div>
+
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>VERTICAL SPEED</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.vSpeed : ""  }</p>
+                    </div>
+                    
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>TRACK</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.angle : ""  }</p>
+                    </div>
+
+                    <div style={{ display: "inline-block", width: "50%", float: "left", marginBottom: "10px" }}>
+                        <strong style={{ margin: "0px" , fontSize: "13px" }}>MAG</strong>
+                        <p style={{ margin: "0px" }}>{ this.state.aircraft ? this.state.aircraft.mag : ""  }</p>
+                    </div>
+
+                    
+                </div>
             </aside>
         )
     }
