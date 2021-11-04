@@ -3,7 +3,7 @@ import {React, Component} from 'react'
 
 class Sidebar extends Component {
     state = {
-        display: "block",
+        display: "none",
         icao: ''
     }
 
@@ -28,7 +28,7 @@ class Sidebar extends Component {
         });
 
         if(this.props.icao !== '') {
-            const apiUrl = 'http://103.95.99.98:8001?icao=' + this.state.icao;
+            const apiUrl = 'http://192.168.30.6:8001/icao/' + this.state.icao;
         
 
         // this.interval = setInterval(() => fetch(apiUrl)
@@ -49,7 +49,7 @@ class Sidebar extends Component {
         fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 this.setState({
                     aircraft: data[0],
                 });
@@ -78,7 +78,7 @@ class Sidebar extends Component {
 
 
     render () {
-        let aircraft 
+        // let aircraft 
         // console.log(this.props.aircraft.flightInfo.lat);
         const sidebarStyle = { 
             height: "calc(100% - 200px)", 
