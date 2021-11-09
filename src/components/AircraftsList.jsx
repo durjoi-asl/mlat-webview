@@ -22,7 +22,7 @@ class AircraftsList extends Component {
 
     componentWillMount() {
         // const apiUrl = 'http://103.95.99.98:8001';
-        const apiUrl = 'http://192.168.30.6:8001/';
+        const apiUrl = 'http://192.168.30.22:8001/';
 
         // let headers = new Headers();
         const requestOptions = {

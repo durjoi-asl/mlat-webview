@@ -29,7 +29,7 @@ class Login extends Component {
         // alert('A name was submitted: ' + this.state.email);
         event.preventDefault();
 
-        const apiUrl = 'http://103.95.99.98:8001/login';
+        const apiUrl = 'http://192.168.30.22:8001/login';
 
         // let headers = new Headers();
         const requestOptions = {

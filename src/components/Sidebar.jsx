@@ -28,7 +28,7 @@ class Sidebar extends Component {
         });
 
         if(this.props.icao !== '') {
-            const apiUrl = 'http://192.168.30.6:8001/icao/' + this.state.icao;
+            const apiUrl = 'http://192.168.30.22:8001/icao/' + this.state.icao;
         
 
         // this.interval = setInterval(() => fetch(apiUrl)
